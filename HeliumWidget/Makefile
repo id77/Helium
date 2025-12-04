@@ -1,5 +1,5 @@
 ARCHS := arm64 arm64e
-TARGET := iphone:clang:15.6:14.0
+TARGET := iphone:clang:16.5:14.0
 
 include $(THEOS)/makefiles/common.mk
 
@@ -7,8 +7,10 @@ include $(THEOS)/makefiles/common.mk
 TOOL_NAME = HeliumWidget
 $(TOOL_NAME)_FILES = HeliumWidget.swift
 $(TOOL_NAME)_INSTALL_PATH = /tmp/helium_widget_build
-$(TOOL_NAME)_FRAMEWORKS = WidgetKit SwiftUI
+$(TOOL_NAME)_FRAMEWORKS = WidgetKit SwiftUI Foundation
 $(TOOL_NAME)_SWIFTFLAGS = -swift-version 5
+$(TOOL_NAME)_LDFLAGS = -rpath @executable_path/Frameworks -rpath @loader_path/Frameworks
+$(TOOL_NAME)_CFLAGS = -fobjc-arc
 
 ifeq ($(TARGET_CODESIGN),ldid)
 $(TOOL_NAME)_CODESIGN_FLAGS = -Sent.plist

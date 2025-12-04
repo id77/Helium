@@ -66,6 +66,9 @@ endif
 include $(THEOS_MAKE_PATH)/application.mk
 include $(THEOS_MAKE_PATH)/aggregate.mk
 
+before-all::
+	$(ECHO_NOTHING)rm -rf packages$(ECHO_END)
+
 after-stage::
 	$(ECHO_NOTHING)mkdir -p packages $(THEOS_STAGING_DIR)/Payload$(ECHO_END)
 	$(ECHO_NOTHING)cp -rp $(THEOS_STAGING_DIR)/Applications/Helium.app $(THEOS_STAGING_DIR)/Payload$(ECHO_END)
