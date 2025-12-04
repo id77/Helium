@@ -195,7 +195,7 @@ static void ReloadHUD
         BOOL hasBlur = getBoolFromDictKey(blurDetails, @"hasBlur");
         NSInteger blurCornerRadius = getIntFromDictKey(blurDetails, @"cornerRadius", 4);
         double blurAlpha = getDoubleFromDictKey(blurDetails, @"alpha", 1.0);
-        NSInteger textAlign = getIntFromDictKey(properties, @"textAlignment", 1);
+        NSTextAlignment textAlign = (NSTextAlignment)getIntFromDictKey(properties, @"textAlignment", 1);
         NSDictionary *colorDetails = [properties valueForKey:@"colorDetails"] ? [properties valueForKey:@"colorDetails"] : @{@"usesCustomColor" : @(NO)};
         BOOL usesCustomColor = getBoolFromDictKey(colorDetails, @"usesCustomColor");
         UIColor *textColor = [UIColor whiteColor];

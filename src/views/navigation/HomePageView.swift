@@ -74,6 +74,21 @@ struct HomePageView: View {
       .onAppear {
         #if !targetEnvironment(simulator)
           isNowEnabled = IsHUDEnabledBridger()
+          
+          // Listen for HUD launched notification
+          DarwinNotificationCenter.default.addObserver(forName: "com.leemin.notification.hud.launched") { _ in
+            DispatchQueue.main.async {
+              isNowEnabled = true
+              buttonDisabled = false
+              inProgress = false
+            }
+          }
+        #endif
+      }
+      .onDisappear {
+        #if !targetEnvironment(simulator)
+          // Clean up notification observer
+          DarwinNotificationCenter.default.removeObserver(withName: "com.leemin.notification.hud.launched")
         #endif
       }
       .onOpenURL(perform: { url in

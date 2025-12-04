@@ -9,6 +9,14 @@
 
 #pragma mark - HUD Functions
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 BOOL IsHUDEnabledBridger();
 void SetHUDEnabledBridger(BOOL isEnabled);
 void waitForNotificationBridger(void (^onFinish)(), BOOL isEnabled);
+
+#ifdef __cplusplus
+}
+#endif

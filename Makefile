@@ -1,5 +1,5 @@
 ARCHS := arm64 arm64e
-TARGET := iphone:clang:16.5:14.0
+TARGET := iphone:clang:15.6:14.0
 INSTALL_TARGET_PROCESSES := Helium
 
 TARGET_CC := $(shell xcrun --sdk iphoneos --find clang)
