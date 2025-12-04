@@ -61,6 +61,16 @@ if [ -d $BUILD_LOCATION ]; then
     mkdir Payload
     cp -r $BUILD_LOCATION Payload/Helium.app
 
+    # Copy Widget if it exists
+    WIDGET_LOCATION="$WORKING_LOCATION/HeliumWidget/.theos/obj/HeliumWidget.appex"
+    if [ -d "$WIDGET_LOCATION" ]; then
+        echo "Adding HeliumWidget"
+        mkdir -p Payload/Helium.app/PlugIns
+        cp -r "$WIDGET_LOCATION" Payload/Helium.app/PlugIns/
+        # Fix Widget Info.plist display name
+        /usr/libexec/PlistBuddy -c "Set :CFBundleDisplayName 氦气" Payload/Helium.app/PlugIns/HeliumWidget.appex/Info.plist 2>/dev/null || true
+    fi
+
     # Archive
     echo "Archiving"
     if [[ $* != *--debug* ]]; then

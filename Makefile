@@ -7,6 +7,10 @@ TARGET_CXX := $(shell xcrun --sdk iphoneos --find clang++)
 TARGET_LD := $(shell xcrun --sdk iphoneos --find clang++)
 
 include $(THEOS)/makefiles/common.mk
+
+# Build Widget first
+SUBPROJECTS += HeliumWidget
+
 APPLICATION_NAME = Helium
 
 SRC_DIR := src
@@ -60,8 +64,13 @@ $(APPLICATION_NAME)_CODESIGN_FLAGS += --entitlements ent.plist $(TARGET_CODESIGN
 endif
 
 include $(THEOS_MAKE_PATH)/application.mk
+include $(THEOS_MAKE_PATH)/aggregate.mk
 
 after-stage::
 	$(ECHO_NOTHING)mkdir -p packages $(THEOS_STAGING_DIR)/Payload$(ECHO_END)
 	$(ECHO_NOTHING)cp -rp $(THEOS_STAGING_DIR)/Applications/Helium.app $(THEOS_STAGING_DIR)/Payload$(ECHO_END)
+	$(ECHO_NOTHING)mkdir -p $(THEOS_STAGING_DIR)/Payload/Helium.app/PlugIns$(ECHO_END)
+	$(ECHO_NOTHING)if [ -d $(THEOS_STAGING_DIR)/Applications/Helium.app/PlugIns/HeliumWidget.appex ]; then \
+		cp -rp $(THEOS_STAGING_DIR)/Applications/Helium.app/PlugIns/HeliumWidget.appex $(THEOS_STAGING_DIR)/Payload/Helium.app/PlugIns/; \
+	fi$(ECHO_END)
 	$(ECHO_NOTHING)cd $(THEOS_STAGING_DIR); zip -qr Helium.tipa Payload; cd -;$(ECHO_END)
